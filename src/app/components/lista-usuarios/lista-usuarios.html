@@ -1,1 +1,36 @@
-<p>lista-usuarios works!</p>
+<div class="container mt-4">
+  <div class="row">
+    @for (usuario of usuariosServicio.listaUsuarios(); track usuario.id) {
+      <div class="col-12 col-md-6 col-lg-3 mb-4">
+        <div class="card h-100 shadow-sm border-0 text-center p-3">
+          <img [src]="usuario.image" class="card-img-top rounded-circle mx-auto d-block shadow-sm mb-3" 
+               [alt]="usuario.first_name" style="width: 120px; height: 120px; object-fit: cover;">
+          
+          <div class="card-body p-0">
+            <h5 class="card-title mb-1 text-truncate">
+              {{ usuario.first_name }} {{ usuario.last_name }}
+            </h5>
+            <p class="card-text text-muted small mb-3">@{{ usuario.username }}</p>
+            
+            <div class="d-flex justify-content-center gap-2">
+              <button class="btn btn-outline-primary btn-sm" [routerLink]="['/user', usuario.id]">
+                <i class="bi bi-eye"></i>
+              </button>
+              <button class="btn btn-outline-warning btn-sm" [routerLink]="['/updateuser', usuario.id]">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-outline-danger btn-sm" (click)="eliminarUsuario(usuario.id!, usuario.first_name)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <div class="col-12 text-center py-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2 text-muted">Cargando el listado de usuarios...</p>
+      </div>
+    }
+  </div>
+</div>
