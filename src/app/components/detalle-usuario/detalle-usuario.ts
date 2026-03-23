@@ -44,7 +44,7 @@ export class DetalleUsuario implements OnInit {
     });
 
     if (resultado.isConfirmed) {
-      this._usuariosServicio.borrar(this.usuario()?.id!).subscribe({
+      this._usuariosServicio.borrar(this.usuario()?._id!).subscribe({
         next: () => {
           Swal.fire('Eliminado', 'El usuario ha sido borrado con éxito', 'success');
           this._router.navigate(['/home']);

@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Usuario, RespuestaUsuarios } from '../interfaces/usuario.interface';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom, Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +31,10 @@ export class UsuariosService {
   }
 
   obtenerPorId(id: string): Observable<Usuario> {
-    return this._http.get<Usuario>(`${this._urlBase}/${id}`);
-  }
+  return this._http.get<any>(`${this._urlBase}/${id}`).pipe(
+    map(res => res.first_name ? res : res.data)
+  );
+}
 
   crear(usuario: Usuario): Observable<Usuario> {
     return this._http.post<Usuario>(this._urlBase, usuario);
@@ -42,7 +44,7 @@ export class UsuariosService {
     return this._http.put<Usuario>(`${this._urlBase}/${usuario.id}`, usuario);
   }
 
-  borrar(id: number): Observable<any> {
+  borrar(id: string): Observable<any> {
     return this._http.delete<any>(`${this._urlBase}/${id}`);
   }
 }

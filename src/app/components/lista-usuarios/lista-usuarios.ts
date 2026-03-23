@@ -17,7 +17,7 @@ export class ListaUsuarios implements OnInit {
     this.usuariosServicio.obtenerTodos();
   }
 
-  async eliminarUsuario(id: number, nombre: string) {
+  async eliminarUsuario(id: string, nombre: string) {
     const resultado = await Swal.fire({
       title: '¿Estás seguro?',
       text: `Vas a eliminar al usuario ${nombre}`,
@@ -33,7 +33,7 @@ export class ListaUsuarios implements OnInit {
       this.usuariosServicio.borrar(id).subscribe({
         next: () => {
           this.usuariosServicio.listaUsuarios.update(lista => 
-            lista.filter(u => u.id !== id)
+            lista.filter(u => u._id !== id)
           );
           Swal.fire('Eliminado', `El usuario ${nombre} ha sido borrado con éxito`, 'success');
         },

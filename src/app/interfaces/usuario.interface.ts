@@ -1,5 +1,6 @@
 export interface Usuario {
-  id?: number;
+  _id?: string; // Para usuarios obtenidos de la API
+  id?: number;  // Para usuarios creados localmente
   first_name: string;
   last_name: string;
   username: string;
