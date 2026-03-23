@@ -1,1 +1,37 @@
-<p>detalle-usuario works!</p>
+@if (usuario()) {
+  <div class="container mt-5">
+    <div class="card shadow border-0 p-4">
+      <div class="row align-items-center">
+        <div class="col-md-4 text-center">
+          <img [src]="usuario()?.image" class="img-fluid rounded-circle shadow-sm" 
+               [alt]="usuario()?.first_name" style="max-width: 250px;">
+        </div>
+        <div class="col-md-8">
+          <h2>Datos del Usuario</h2>
+          <hr>
+          <p><strong>Nombre:</strong> {{ usuario()?.first_name }}</p>
+          <p><strong>Apellido:</strong> {{ usuario()?.last_name }}</p>
+          <p><strong>Nombre de Usuario:</strong> @{{ usuario()?.username }}</p>
+          <p><strong>Email:</strong> {{ usuario()?.email }}</p>
+          
+          <div class="d-flex gap-2 mt-4">
+            <button class="btn btn-danger" (click)="confirmarEliminar()">
+              <i class="bi bi-trash"></i> Eliminar
+            </button>
+            <button class="btn btn-warning text-white" [routerLink]="['/updateuser', usuario()?.id]">
+              <i class="bi bi-pencil"></i> Actualizar
+            </button>
+            <button class="btn btn-secondary" routerLink="/home">
+              <i class="bi bi-arrow-left"></i> Volver al listado
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="text-center mt-5">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p>Cargando detalles del usuario...</p>
+  </div>
+}
