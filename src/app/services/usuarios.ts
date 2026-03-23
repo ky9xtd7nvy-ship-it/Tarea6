@@ -8,14 +8,23 @@ import { firstValueFrom, Observable } from 'rxjs';
 })
 export class UsuariosService {
   private _http = inject(HttpClient);
-  private _urlBase = 'https://peticiones.online';
+  private _urlBase = 'https://peticiones.online/api/users';
 
   listaUsuarios = signal<Usuario[]>([]);
 
   async obtenerTodos() {
     try {
-      const respuesta = await firstValueFrom(this._http.get<RespuestaUsuarios>(this._urlBase));
-      this.listaUsuarios.set(respuesta.data);
+    const respuesta = await firstValueFrom(this._http.get<any>(this._urlBase));
+    console.log('Respuesta completa recibida:', respuesta);
+
+    const datosListado = respuesta.results || respuesta.data;
+
+    if (datosListado) {
+      console.log('Listado de usuarios detectado:', datosListado);
+      this.listaUsuarios.set(datosListado);
+    } else {
+      console.warn('No se encontró el listado de usuarios en la respuesta');
+    }
     } catch (error) {
       console.error('Error al cargar usuarios', error);
     }
